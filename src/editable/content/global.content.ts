@@ -8,11 +8,11 @@ export const globalContent = {
     baseUrl: slot4BrandConfig.baseUrl,
   },
   nav: {
-    tagline: 'Independent reading platform',
+    tagline: '',
     primaryLinks: [
-      { label: 'Articles', href: '/articles' },
-      { label: 'Visuals', href: '/image-sharing' },
-      { label: 'Listings', href: '/listings' },
+      { label: 'Business Listings', href: '/listing' },
+      { label: 'Classifieds', href: '/classified' },
+      { label: 'Insights', href: '/article' },
       { label: 'Contact', href: '/contact' },
     ],
     actions: {
@@ -21,16 +21,16 @@ export const globalContent = {
     },
   },
   footer: {
-    tagline: 'Stories, resources, and discoverable posts',
-    description: 'A connected publishing surface for articles, visuals, listings, profiles, bookmarks, and downloadable resources.',
+    tagline: 'Verified listings, sharper discovery',
+    description: 'A business listing platform for finding credible companies, comparing services, and turning local visibility into real inquiries.',
     columns: [
       {
         title: 'Explore',
         links: [
-          { label: 'Articles', href: '/articles' },
-          { label: 'Listings', href: '/listings' },
-          { label: 'Images', href: '/image-sharing' },
-          { label: 'PDF Library', href: '/pdf' },
+          { label: 'Business Listings', href: '/listing' },
+          { label: 'Classifieds', href: '/classified' },
+          { label: 'Business Insights', href: '/article' },
+          { label: 'Profiles', href: '/profile' },
         ],
       },
       {
@@ -41,7 +41,7 @@ export const globalContent = {
         ],
       },
     ],
-    bottomNote: 'Built for clean discovery and connected publishing.',
+    bottomNote: 'Built for business discovery, comparison, and direct connection.',
   },
   commonLabels: {
     readMore: 'Read more',
