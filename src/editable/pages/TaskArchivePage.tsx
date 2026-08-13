@@ -20,6 +20,14 @@ export const taskMetadata = (task: TaskKey, path: string) =>
     description: taskPageMetadata[task]?.description,
   })
 
+const HTML_ENTITIES: Record<string, string> = {
+  amp: '&', lt: '<', gt: '>', quot: '"', apos: "'", nbsp: ' ',
+  ndash: '–', mdash: '—', bull: '•', hellip: '…',
+  lsquo: "‘", rsquo: "’", ldquo: "“", rdquo: "”",
+}
+const decodeEntities = (value: string) => value.replace(/&#x([0-9a-f]+);/gi, (_, hex) => String.fromCharCode(parseInt(hex, 16))).replace(/&#(\d+);/g, (_, dec) => String.fromCharCode(Number(dec))).replace(/&([a-z]+);/gi, (m, name) => HTML_ENTITIES[name.toLowerCase()] ?? m)
+const stripHtml = (value: string) => value.replace(/<(script|style)[^>]*>[\s\S]*?<\/\1>/gi, ' ').replace(/<!--[\s\S]*?-->/g, ' ').replace(/<[^>]*>/g, ' ')
+const plainText = (value: unknown, limit = 0) => { if (typeof value !== 'string') return ''; const text = decodeEntities(stripHtml(value)).replace(/\s+/g, ' ').trim(); return limit > 0 && text.length > limit ? text.slice(0, limit) + '…' : text }
 const getContent = (post: SitePost) => post.content && typeof post.content === 'object' ? post.content as Record<string, unknown> : {}
 const asText = (value: unknown) => typeof value === 'string' ? value.trim() : ''
 const isUrl = (value: string) => value.startsWith('/') || /^https?:\/\//i.test(value)
@@ -35,12 +43,12 @@ const getImages = (post: SitePost) => {
 
 const placeholder = '/placeholder.svg?height=900&width=1200'
 const getImage = (post: SitePost) => getImages(post)[0] || placeholder
-const getCategory = (post: SitePost, fallback: string) => asText(getContent(post).category) || post.tags?.[0] || fallback
-const getSummary = (post: SitePost) => post.summary || asText(getContent(post).description) || asText(getContent(post).excerpt) || asText(getContent(post).body)
+const getCategory = (post: SitePost, fallback: string) => plainText(getContent(post).category, 60) || post.tags?.[0] || fallback
+const getSummary = (post: SitePost) => plainText(post.summary, 260) || plainText(getContent(post).description, 260) || plainText(getContent(post).excerpt, 260) || plainText(getContent(post).body, 260)
 const getField = (post: SitePost, keys: string[]) => {
   const content = getContent(post)
   for (const key of keys) {
-    const value = asText(content[key])
+    const value = plainText(content[key], 120)
     if (value) return value
   }
   return ''

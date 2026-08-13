@@ -99,7 +99,7 @@ function FeatureListing({ post, primaryTask, primaryRoute }: { post: SitePost; p
   )
 }
 
-export function EditableHomeHero({ primaryTask, primaryRoute }: HomeSectionProps) {
+export function EditableHomeHero({ primaryRoute }: HomeSectionProps) {
   const heroTitle = pagesContent.home.hero.title.join(' ')
   return (
     <section className="relative overflow-hidden bg-[#05001c] text-white">
